@@ -8,6 +8,8 @@ from flaskblog.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
 from flaskblog.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+
 
 
 @app.route("/")
@@ -191,16 +193,18 @@ def user_posts(username):
 
 
 def send_reset_email(user):
-    token = user.get_reset_token()
+    token = user.get_reset_token()  
+    reset_url = url_for('reset_token', token=token, _external=True)  # Updated line
     msg = Message('Password Reset Request',
                   sender='noreply@demo.com',
                   recipients=[user.email])
     msg.body = f'''To reset your password, visit the following link:
-{url_for('reset_token', token=token, _external=True)}
+{reset_url}
 
 If you did not make this request then simply ignore this email and no changes will be made.
 '''
     mail.send(msg)
+
 
 
 @app.route("/reset_password", methods=['GET', 'POST'])
