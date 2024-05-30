@@ -1,4 +1,3 @@
-import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
@@ -20,4 +19,3 @@ app.config['MAIL_USERNAME'] = "practicesession3@gmail.com"
 app.config['MAIL_PASSWORD'] = "gpap kwxz sujc qxie"
 mail = Mail(app)
 
-from flaskblog import routes
