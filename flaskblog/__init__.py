@@ -1,12 +1,14 @@
+import os
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_bcrypt import Bcrypt
+from flask_sqlalchemy import SQLAlchemy # type: ignore
+from flask_bcrypt import Bcrypt # type: ignore
 from flask_login import LoginManager
-from flask_mail import Mail
+from flask_mail import Mail # type: ignore
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+app.config['SECURITY_PASSWORD_SALT'] = 'my_precious_two'  # Add this line
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
@@ -19,3 +21,4 @@ app.config['MAIL_USERNAME'] = "practicesession3@gmail.com"
 app.config['MAIL_PASSWORD'] = "gpap kwxz sujc qxie"
 mail = Mail(app)
 
+from flaskblog import routes
