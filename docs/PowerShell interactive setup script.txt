@@ -1,0 +1,53 @@
+# Display the menu of options
+Write-Output "Select an option by entering the corresponding number:"
+Write-Output "1. Create the virtual environment"
+Write-Output "2. Activate the virtual environment"
+Write-Output "3. Install packages from requirements.txt"
+Write-Output "4. Deactivate the virtual environment"
+Write-Output "5. Skip further prompts and continue working in the activated environment"
+Write-Output "6. Exit"
+
+# Loop to prompt for actions until the user chooses to exit or skip further prompts
+do {
+    $choice = Read-Host "Enter your choice (1-6)"
+
+    switch ($choice) {
+        "1" {
+            # Create the virtual environment
+            py -m venv flask-project-env
+            Write-Output "Virtual environment 'flask-project-env' created."
+        }
+        "2" {
+            # Activate the virtual environment
+            ./flask-project-env/Scripts/Activate
+            Write-Output "Virtual environment 'flask-project-env' activated."
+        }
+        "3" {
+            # Install packages from requirements.txt
+            if (Test-Path requirements.txt) {
+                pip install -r requirements.txt
+                Write-Output "Packages from requirements.txt have been installed."
+            } else {
+                Write-Output "requirements.txt file not found."
+            }
+        }
+        "4" {
+            # Deactivate the virtual environment
+            deactivate
+            Write-Output "Virtual environment 'flask-project-env' deactivated."
+        }
+        "5" {
+            # Skip further prompts and keep the environment activated
+            Write-Output "Skipping further prompts. You can now continue working in the activated environment."
+            break
+        }
+        "6" {
+            # Exit the script
+            Write-Output "Exiting the script."
+            break
+        }
+        default {
+            Write-Output "Invalid choice. Please select a valid option (1-6)."
+        }
+    }
+} while ($choice -ne "5" -and $choice -ne "6")
