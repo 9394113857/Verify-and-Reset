@@ -1,0 +1,39 @@
+# -------------------------------
+# Git Restore Section
+# -------------------------------
+
+# Step 1: Discard changes in a specific file
+# This command will reset the file to the last committed state
+# Replace <filename> with the actual file name you want to restore
+git restore <filename> ###
+
+# Step 2: Unstage a file (remove from staging area but keep changes)
+# This will keep your changes in the file but remove it from the staging area
+git restore --staged <filename>
+
+# Step 3: Restore all files to their last committed state
+# This will discard all changes in the working directory and revert files to the last commit
+git restore . ###
+
+# -------------------------------
+# Git Rebase Section
+# -------------------------------
+
+# Step 4: Rebase the 'changes' branch onto the 'main' branch
+# This will take all commits from 'changes' and replay them on top of the 'main' branch
+# Make sure you're on the 'changes' branch before running this command
+git checkout changes   # Switch to 'changes' branch (if not already on it)
+
+# Perform rebase of 'changes' onto 'main'
+git rebase main
+
+# Step 5: Resolve conflicts (if any) during rebase
+# If conflicts occur, Git will pause and notify you to resolve them manually
+# After resolving conflicts in the files, stage the changes and continue the rebase process
+git add <resolved_file>  # Add the resolved file(s)
+git rebase --continue    # Continue the rebase after resolving conflicts
+
+# Step 6: Abort the rebase (if needed)
+# If you decide to cancel the rebase operation, you can use the following command
+# This will stop the rebase process and return your branch to the state it was in before starting the rebase
+git rebase --abort
