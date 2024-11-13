@@ -1,1 +1,12 @@
 This is the new git branch called "changes" for any kind of changes in progress okay. 
+
+git commit -m "Fix: Prevent reuse of old passwords during reset process
+
+1. Prevented reuse of old password during password reset
+2. Added validation to ensure the new password is different from the old password
+3. Updated form to display appropriate error message when old password is entered
+4. Adjusted error handling to show 'old password not allowed' message on the form
+5. Ensured user receives clear feedback when attempting to reuse the old password
+
+Date: 2024-11-13
+Time: 14:35"
