@@ -71,6 +71,28 @@ class User(db.Model, UserMixin):
         # Retrieve user by ID
         return User.query.get(user_id)
 
+    # Define a method to handle password history
+    def add_password_to_history(self, new_password):
+        # Get the current date and time when the password is changed
+        timestamp = datetime.utcnow()
+        # Create a PasswordHistory record
+        password_history = PasswordHistory(user_id=self.id, password_hash=new_password, changed_on=timestamp)
+        # Add the record to the session and commit to save
+        db.session.add(password_history)
+        db.session.commit()
+
+    # Method to check if the new password is the same as any recent passwords
+    def is_password_in_history(self, password):
+        # Retrieve passwords history and check if any password matches
+        history = PasswordHistory.query.filter_by(user_id=self.id).order_by(PasswordHistory.changed_on.desc()).limit(5).all()
+        for record in history:
+            # If any record matches the new password, return True
+            if check_password_hash(record.password_hash, password):
+                return True
+        # Return False if no match found
+        return False
+
+
 # Post model to represent blog posts in the database
 class Post(db.Model):
     # Primary key for Post model
@@ -83,3 +105,19 @@ class Post(db.Model):
     content = db.Column(db.Text, nullable=False)
     # Foreign key linking to the user's primary key
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+
+# PasswordHistory model to store old passwords and timestamps
+class PasswordHistory(db.Model):
+    # Primary key for PasswordHistory model
+    id = db.Column(db.Integer, primary_key=True)
+    # Foreign key linking to the user’s primary key
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    # Hashed password value
+    password_hash = db.Column(db.String(60), nullable=False)
+    # Timestamp of when the password was changed
+    changed_on = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+    # Define a relationship back to the User model
+    user = db.relationship('User', backref=db.backref('password_histories', lazy=True))
+
