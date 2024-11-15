@@ -1,0 +1,8 @@
+# Upgrades the ensurepip module, which is used to bootstrap pip installation if it's missing or outdated.
+python -m ensurepip --upgrade
+
+# Installs the required Python packages listed in the 'requirements.txt' file.
+pip install -r .\requirements.txt
+
+# Upgrades pip to the latest version using the specified Python interpreter.
+python.exe -m pip install --upgrade pip
