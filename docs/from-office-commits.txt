@@ -25,5 +25,27 @@ Note: This commit includes the existing code. The final attempt to fully impleme
 
 Date: $(Get-Date -Format 'yyyy-MM-dd hh:mm tt')"
 
+----------------------------------------------------------------
+From office system changes as on: 30-11-24 after ---> 6:30 PM
+----------------------------------------------------------------
+git commit -m "issues-fixes-code: Branch Created for Issue Resolution and Testing
+
+1. **Purpose of the Branch**:
+   - This branch was created specifically to address and resolve existing issues in the codebase.
+   - The focus is on fixing bugs, resolving issues related to password handling, and ensuring the overall system is functioning correctly.
+
+2. **Bug Fixes**:
+   - Fixed issues causing the reuse of old passwords during password resets.
+   - Resolved errors in password history tracking to ensure secure password policies are enforced.
+
+3. **Testing Enhancements**:
+   - Implemented unit tests to verify password history functionality.
+   - Conducted testing on JWT token generation, validation, and expiration to ensure secure login sessions.
+   - Tested the email verification process to confirm user account activation flow.
+
+Note: This commit only includes fixes and adjustments required for the current issue resolution. Further development and feature implementation will be done in future branches.
+
+Date: $(Get-Date -Format 'yyyy-MM-dd hh:mm tt')"
+
 
 
