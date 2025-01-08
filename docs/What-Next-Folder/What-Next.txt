@@ -467,3 +467,28 @@ def internal_error(error):
 
 
 
+===============
+
+Now try to implement blueprints also if posiible.
+
+Registration-> after verified only then correct details then it will be redirected to dashboard.
+Login-> Yes correct details tested with confirm redirected to dashboard page as of now.
+Logout -> Yes working and redirected to the login page again.
+
+============
+
+Accout Details edit working
+New posts and others posts can see every users so like that.
+
+===============================================================
+
+By clicking on :-
+http://127.0.0.1:5000/  ### Flask Blog
+http://127.0.0.1:5000/home ### Home
+http://127.0.0.1:5000/about ### About
+
+===============================================================
+
+so these are working as of now.
+
+===============
