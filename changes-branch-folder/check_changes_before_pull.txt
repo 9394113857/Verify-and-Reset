@@ -1,0 +1,24 @@
+# 1. Fetch remote updates without merging them into your local branch.
+git fetch origin
+# This updates your local references for the remote branches, making the latest changes available locally.
+
+# 2. View detailed differences between your local branch and the remote branch.
+git diff changes origin/changes
+# Shows line-by-line differences between the local "changes" branch and the remote "origin/changes".
+
+# 3. View commits in the remote branch that are missing in your local branch.
+git log changes..origin/changes
+# Lists commits in the remote branch that are not yet in your local branch.
+
+# 4. View commits in your local branch that are not present in the remote branch.
+git log origin/changes..changes
+# Lists commits in your local branch that have not yet been pushed to the remote branch.
+
+# 5. View a summarized list of file differences (e.g., files changed, lines added/removed).
+git diff --stat changes origin/changes
+# Displays a summary of changes to give a quick overview.
+
+# 6. Pull the changes from the remote branch if acceptable after reviewing.
+git pull origin changes
+# Merges the latest changes from the remote "changes" branch into your local branch.
+# If there are conflicts, Git will notify you to resolve them manually.
