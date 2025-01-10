@@ -1,0 +1,71 @@
+# Git Workflow: Synchronizing Local and Remote Branches, Resolving Conflicts, and Merging
+
+1. # Create and switch to a new branch locally
+   Command:
+   git checkout -b new-branch  # Create and checkout to 'new-branch'
+
+2. # Edit files locally (e.g., app.module.ts or other files)
+   Action: Edit the files you need and save the changes.
+
+3. # Stage the changes locally
+   Command:
+   git add .  # Stage all modified files for commit
+
+4. # Commit changes locally
+   Command:
+   git commit -m "Made changes in new-branch"  # Commit changes with a descriptive message
+
+5. # Push the new branch to remote
+   Command:
+   git push origin new-branch  # Push 'new-branch' to remote repository
+
+6. # Fetch the latest changes from remote
+   Command:
+   git fetch origin  # Fetch the latest changes from the remote repository
+
+7. # Merge changes from the target branch (e.g., main) into your current branch (new-branch)
+   Command:
+   git merge origin/main  # Merge 'main' branch into 'new-branch'
+
+8. # If conflicts arise during the merge, open conflicted files and resolve them
+   Action: Resolve the conflicts manually, and remove conflict markers (<<<<<<, ======, >>>>>>)
+
+9. # Stage the resolved files after resolving conflicts
+   Command:
+   git add <conflicted-file>  # Stage the resolved files
+
+10. # Commit the merge resolution
+    Command:
+    git commit -m "Resolved merge conflicts in new-branch"  # Commit after resolving conflicts
+
+11. # Push the merged changes to the remote repository
+    Command:
+    git push origin new-branch  # Push the merged changes to 'new-branch' on remote
+
+12. # Create a pull request (PR) to merge new-branch into the main branch on GitHub
+    Action:
+    - Go to your GitHub repository.
+    - You should see a prompt to create a pull request for your newly pushed `new-branch`.
+    - Click the "Compare & pull request" button next to your branch.
+    - Provide a description for your changes in the pull request.
+    - Select the target branch (usually `main`) and review the changes.
+    - Click "Create pull request" to initiate the process.
+
+13. # After PR approval, merge the PR on GitHub
+    Action:
+    - Once the pull request is reviewed and approved by your team or repository admins, you can merge it.
+    - On the GitHub page of the pull request, you will find a "Merge pull request" button. Click it to merge the changes from `new-branch` into `main`.
+    - After merging, you will be prompted to delete the branch (you can choose to delete the remote branch at this point).
+
+14. # Delete the branch locally after merging
+    Command:
+    git branch -d new-branch  # Delete the branch locally
+
+15. # Delete the branch remotely after merging (optional)
+    Command:
+    git push origin --delete new-branch  # Delete the branch remotely
+
+16. # Checkout to main branch and pull the latest changes from remote
+    Command:
+    git checkout main  # Switch to the main branch
+    git pull origin main  # Sync local main with remote main branch

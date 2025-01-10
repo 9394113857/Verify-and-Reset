@@ -1,0 +1,29 @@
+# 1. Clone the repository and checkout the 'changes' branch
+git clone -b changes https://github.com/username/repository-name.git
+
+# 2. Change into the cloned repository directory
+cd repository-name
+
+# 3. Checkout the specific commit (replace 'commit-hash' with the actual commit hash)
+git checkout a9bcebf87e3981b0943232bfaa3ef72b2e209264
+
+# 4. (Optional) Create a new branch from this commit for making changes
+git checkout -b new-branch-name
+
+# 5. Make changes as needed, then stage the changes
+git add .
+
+# 6. Commit the changes with a message
+git commit -m "Commit message for new branch from specific commit"
+
+# 7. Push the new branch with changes to the remote repository
+git push origin new-branch-name
+
+# 8. Switch back to the 'changes' branch
+git checkout changes
+
+# 9. Merge the new branch into the 'changes' branch
+git merge new-branch-name
+
+# 10. Push the merged changes to the remote 'changes' branch
+git push origin changes

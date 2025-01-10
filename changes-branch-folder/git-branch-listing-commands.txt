@@ -1,0 +1,17 @@
+# 1. Clone the repository from the URL
+git clone https://github.com/username/repository-name.git
+
+# 2. Navigate into the cloned repository directory
+cd repository-name
+
+# 3. List all branches (both local and remote)
+git branch -a
+
+# 4. List only local branches
+git branch
+
+# 5. List only remote branches
+git branch -r
+
+# 6. View detailed information about branches (including most recent commit)
+git branch -vv

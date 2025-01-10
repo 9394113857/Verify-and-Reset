@@ -1,0 +1,24 @@
+# 1. List all branches (local and remote)
+git branch -a
+
+# 2. Compare changes between two branches (e.g., main and changes)
+git diff main..changes
+
+# 3. Check the overall status (working directory changes)
+git status
+
+# 4. View the commit history of a specific branch
+git log branch-name
+
+# 5. Compare commits between two branches
+git diff branch1..branch2
+
+# 6. Switch to a specific branch (e.g., changes)
+git checkout changes
+
+# 7. Merge another branch (e.g., changes) into the current branch (e.g., main)
+git checkout main   # Switch to 'main' branch
+git merge changes   # Merge 'changes' branch into 'main'
+
+# 8. After merging, check for any differences or uncommitted changes
+git diff

@@ -1,0 +1,63 @@
+# Git Conflict Resolution Steps
+
+1. Clone the repository from GitHub
+   Command: 
+   git clone https://github.com/your-username/your-repo.git
+
+2. Navigate to the repository folder
+   Command: 
+   cd your-repo
+
+3. Create a new branch or checkout to an existing branch
+   Command: 
+   git checkout -b changes
+
+4. Make changes to your files (e.g., editing app.module.ts)
+   Action: Edit the required files and save the changes.
+
+5. Stage the changes
+   Command: 
+   git add .
+
+6. Commit the changes locally
+   Command: 
+   git commit -m "Made changes to app.module.ts"
+
+7. Pull remote changes (This is where the conflict can happen)
+   Command: 
+   git pull origin changes
+
+   Note: Git will stop the merge and show a conflict if both local and remote branches modified the same lines in a file.
+
+8. Open conflicted file (e.g., app.module.ts) and resolve the conflict
+   Action: Open the file and look for conflict markers (<<<<<<, ======, >>>>>>) and manually resolve the conflict.
+   
+   Example Conflict:
+   <<<<<<< HEAD
+   // Your local changes
+   =======
+   // Remote changes
+   >>>>>>> origin/changes
+
+9. Stage the resolved file
+   Command: 
+   git add src/app/app.module.ts
+
+10. Commit the merge resolution
+    Command: 
+    git commit -m "Resolved merge conflict in app.module.ts"
+
+11. Push the changes to remote origin
+    Command: 
+    git push origin changes
+
+12. Verify if everything is synced
+    Command: 
+    git status
+
+13. Optionally, check the git log to confirm commit history
+    Command: 
+    git log --oneline
+
+Note: After these steps, the local 'changes' branch and the remote 'changes' branch are now synced, and the merge conflict has been resolved.
+
