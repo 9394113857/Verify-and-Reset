@@ -1,0 +1,53 @@
+# Step 1: Clone the repository from GitHub
+git clone https://github.com/9394113857/Verify-and-Reset.git
+
+# Step 2: Move into the project directory
+cd Verify-and-Reset
+
+# Step 3: List all branches (local + remote) to confirm the 'changes' branch exists
+git branch -a
+
+# Step 4: Create a local branch named 'changes' tracking the remote one
+git checkout -b changes origin/changes
+
+# Step 5: Confirm you're on the 'changes' branch
+git branch
+
+# Step 6: Open the project in VS Code
+code .
+
+# Step 7: [Manual Step] Make your changes in VS Code (edit/add/delete files)
+
+# Step 8: Stage all your changes
+git add .
+
+# Step 9: Commit the changes with a message
+git commit -m "Add feature XYZ to improve ABC functionality"
+
+# Optional: Use extended commit description if needed
+# git commit -m "Short title" -m "1. Detailed change explanation
+# 2. File references or functions
+# 3. Task/ticket number if applicable"
+
+# Step 10: Push your changes to the remote 'changes' branch
+git push origin changes
+
+# --- Virtual Environment Note ---
+
+# Step 11: Add these to .gitignore (if not already)
+# .env
+# .venv
+# env/
+# venv/
+# ENV/
+# env.bak/
+# venv.bak/
+
+# Step 12: If env/ was accidentally tracked, remove it from Git
+git rm -r --cached env/
+
+# Step 13: Commit the removal of env from tracking
+git commit -m "Remove env folder from Git tracking"
+
+# Step 14: Push the latest update
+git push origin changes
