@@ -18,7 +18,13 @@ app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = "practicesession3@gmail.com"
-app.config['MAIL_PASSWORD'] = "gpap kwxz sujc qxie"
+
+# old line changes:-
+# app.config['MAIL_PASSWORD'] = "gpap kwxz sujc qxie"
+
+# new line changes:-
+app.config['MAIL_PASSWORD'] = "nsln kplj hxac orad" # Newly generated password as on: 9-4-25
+
 mail = Mail(app)
 
 from flaskblog import routes
