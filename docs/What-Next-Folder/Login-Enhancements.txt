@@ -1,0 +1,13 @@
+Let me know if you want:
+
+Token blacklist functionality for logout or refresh tokens.
+
+Refresh token route implementation.
+
+To send JWT via cookie instead of JSON.
+
+Auto-login after registration/email verification.
+
+Enhanced security features (e.g., 2FA, recent password check, etc.)
+
+Would you like me to do a quick review for improvements or security best practices on this code too?
