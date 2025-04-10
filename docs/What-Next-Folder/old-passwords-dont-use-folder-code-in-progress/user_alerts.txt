@@ -1,0 +1,8 @@
+User Alert Titles:
+1.	Welcome Alert: Triggered when a user first interacts with the system or when a new user signs up. It's intended for onboarding and greeting.
+2.	Account Alert: Covers alerts related to user account activities, such as changes in account settings, email updates, or account deactivation.
+3.	Login Alert: Relates to login events, such as successful logins, failed login attempts, or security checks during login.
+4.	Password Alert: Includes alerts for password changes, resets, or issues that prompt the user to reset their password.
+5.	Forgot Password Alert: Triggered when a user requests a password reset or needs assistance recovering a forgotten password.
+6.	Profile Alert: Activated when a user updates or changes their profile information, such as personal details, contact information, or preferences.
+
