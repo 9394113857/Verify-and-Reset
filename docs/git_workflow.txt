@@ -1,0 +1,29 @@
+# git_power_vs_code.txt
+# ✅ Git Commands for PowerShell and VS Code
+
+# Check git status
+git status
+
+# Add all changes
+git add .
+
+# Commit with a message
+git commit -m "Updated files from VS Code or PowerShell"
+
+# Push to remote branch 'changes'
+git push origin changes
+
+# Fetch updates without pulling
+git fetch origin
+
+# Check if remote is ahead
+git log HEAD..origin/changes --oneline
+
+# Check if local is ahead
+git log origin/changes..HEAD --oneline
+
+# Show diff with remote
+git diff origin/changes
+
+# Pull changes from remote to local
+git pull origin changes
