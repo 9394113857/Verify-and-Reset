@@ -1,0 +1,25 @@
+# Stage all changes (new + modified files)
+git add .                                # Adds everything in the current directory to staging
+
+# Commit with detailed initial message (you can paste multi-line commit via editor too)
+git commit -m "Init: Setup Base Project Structure on 'working-code' Branch
+
+This is the initial commit on the newly created 'working-code' branch.
+
+✅ Included:
+- Existing project structure with Flask app, models, routes, templates, static assets.
+- Flask-Migrate setup and working migration commands.
+- app.py entry point with app context and db.create_all()
+- Email verification, JWT token logic, and password reset already implemented.
+
+📌 Purpose:
+This branch will serve as the active development branch for upcoming enhancements,
+bug fixes, and secure feature implementations.
+
+Note: While the codebase already exists, this commit marks the starting point
+for isolated development under the 'working-code' branch.
+
+Date: $(Get-Date -Format 'yyyy-MM-dd hh:mm tt')"
+
+# Push the branch and commit to remote origin
+git push origin working-code             # Pushes your current branch and commits to GitHub (or other remote)

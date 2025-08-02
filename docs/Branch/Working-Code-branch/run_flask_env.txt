@@ -1,0 +1,12 @@
+# Set the Flask application file
+export FLASK_APP=app.py                # Tells Flask which file to run (must contain your Flask app)
+
+# --- Development Mode ---
+export FLASK_ENV=development           # Enables debug mode: auto-reloads on code changes and shows debugger
+flask run                              # Runs the app locally on http://127.0.0.1:5000 with debug features
+
+# ------------------------------------
+
+# --- Production Mode ---
+export FLASK_ENV=production            # Disables debug mode: better performance and hides detailed errors
+flask run                              # Still uses Flask’s built-in server (not recommended for real production)

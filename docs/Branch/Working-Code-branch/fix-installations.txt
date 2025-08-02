@@ -1,0 +1,20 @@
+(env) PS E:\Cloned\Verify-and-Reset> flask db init
+Usage: flask [OPTIONS] COMMAND [ARGS]...
+Try 'flask --help' for help.
+   
+Error: No such command 'db'.
+(env) PS E:\Cloned\Verify-and-Reset> 
+
+------------------
+
+pip install Flask-Migrate
+
+------------------------------
+
+✅ Migration Setup Steps (ONLY ONCE per project)
+You got the error earlier because flask db didn’t work. That’s because Flask-Migrate wasn’t initialized in __init__.py — now it is.
+
+Here are your PowerShell commands (copy this into flask_migration_commands.txt if you want):
+
+------------------------------
+

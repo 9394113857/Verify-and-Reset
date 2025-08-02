@@ -1,0 +1,68 @@
+# === FLASK DATABASE MIGRATION COMMANDS ===
+# Save this file and reuse these commands every time you set up or modify your DB models
+
+# ========================
+# 🔧 DEVELOPMENT COMMANDS
+# ========================
+
+# 1. Set Flask app and environment (Run this in PowerShell or set in .env)
+$env:FLASK_APP = "app.py"                 # Tells Flask which app to run
+$env:FLASK_ENV = "development"            # Enables debug mode (auto-reload and debugger)
+
+# 2. Initialize migration repository (only ONCE per project)
+flask db init                             # Creates the 'migrations/' folder
+
+# 3. Generate migration script after model changes
+flask db migrate -m "Initial migration"   # Change message to match what was added/updated
+
+# 4. Apply the migrations to the database
+flask db upgrade                          # Applies the schema changes to the DB
+
+# 5. Run the application in dev mode
+flask run                                 # Default dev server (auto-reload, debugger)
+
+# ========================
+# 🚀 PRODUCTION COMMANDS
+# ========================
+
+# Set environment variable (in production, use a .env file or shell export)
+$env:FLASK_ENV = "production"             # Disable debug mode for security/performance
+
+# Install production WSGI server (only once)
+pip install waitress                      # ✅ You can also use Gunicorn or uWSGI for Linux
+
+# Run the app with Waitress on port 8000 (Windows)
+waitress-serve --port=8000 flaskblog:app  # ✅ flaskblog is the package that holds your app object
+
+# Alternative for Linux (Gunicorn):
+# gunicorn -w 4 -b 0.0.0.0:8000 flaskblog:app
+
+# ========================
+# 📋 OPTIONAL UTILITIES
+# ========================
+
+# Show the current migration version
+flask db current
+
+# View all historical migrations
+flask db history
+
+# Roll back to the previous migration (use with caution!)
+flask db downgrade
+
+# Show full Alembic configuration (useful for debugging)
+flask db heads                           # ✅ Optional for checking head(s)
+flask db show <revision_id>             # ✅ View details of a specific migration
+
+# ========================
+# 📝 NOTES
+# ========================
+
+# - Always run 'flask db migrate' after changing or adding model classes
+# - Always follow with 'flask db upgrade' to apply those changes
+# - Never edit migration scripts manually unless you're confident with Alembic
+# - Avoid deleting migration folders/files unless you’re using version control (like Git)
+# - In production, avoid using `flask run` — use a proper WSGI server (Waitress, Gunicorn, uWSGI)
+# - For persistent errors, consider running: flask db stamp head   # ✅ Syncs DB with latest migration if mismatched
+
+# === END ===
