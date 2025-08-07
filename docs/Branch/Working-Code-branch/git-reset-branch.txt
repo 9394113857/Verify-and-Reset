@@ -1,0 +1,23 @@
+# Step 1: Switch to the correct branch
+git checkout working-code 
+
+# Step 2: Remove all tracked files from Git (safe and universal)
+git ls-files -z | xargs -0 git rm -rf
+
+# Step 3: Commit the removal
+git commit --allow-empty -m "Remove all files to reset working-code branch"
+
+# Step 4: Push the changes to the remote branch
+git push origin working-code
+
+# Step 5: OPTIONAL — Add a placeholder if folder is empty (so Git tracks it)
+# touch PDF-Works/.gitkeep  # Uncomment this if the folder is empty
+
+# Step 6: Add only the "<some-folder>" folder back
+git add <some-folder>/
+
+# Step 7: Commit the addition
+git commit -m "Add only <Some-Folder> folder to cleaned branch"
+
+# Step 8: Push the changes to the remote
+git push origin working-code

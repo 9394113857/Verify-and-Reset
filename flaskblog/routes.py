@@ -6,7 +6,7 @@ from flask import render_template, url_for, flash, redirect, request, abort, jso
 from flaskblog import app, db, bcrypt, mail
 from flaskblog.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
                              PostForm, RequestResetForm, ResetPasswordForm)
-from flaskblog.models import User, Post
+from flaskblog.models import PasswordHistory, User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
 import jwt
@@ -220,86 +220,62 @@ def user_posts(username):
         .paginate(page=page, per_page=5)
     return render_template('user_posts.html', posts=posts, user=user)
 
-# Password reset email handling
-def send_reset_email(user):
-    token = user.get_reset_token()
-    msg = Message('Password Reset Request',
-                  sender='noreply@demo.com',
-                  recipients=[user.email])
-    msg.body = f'''To reset your password, visit the following link:
-{url_for('reset_token', token=token, _external=True)}
+# Before updating password
+from werkzeug.security import check_password_hash
 
-If you did not make this request, simply ignore this email.
-'''
-    mail.send(msg)
+def is_reused_password(user, new_password):
+    for entry in user.password_history:
+        if check_password_hash(entry.password_hash, new_password):
+            return True
+    return False
 
-# Password reset request form
-@app.route("/reset_password", methods=['GET', 'POST'])
-def reset_request():
-    if current_user.is_authenticated:
-        return redirect(url_for('home'))
-    form = RequestResetForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        if user:
-            send_reset_email(user)
-            flash('An email has been sent with instructions to reset your password.', 'info')
-            return redirect(url_for('login'))
-        else:
-            flash('Email not found', 'danger')
-    return render_template('reset_request.html', title='Reset Password', form=form)
 
-# Original-route-code:-
-# # Password reset token handling
-# @app.route("/reset_password/<token>", methods=['GET', 'POST'])
-# def reset_token(token):
-#     if current_user.is_authenticated:
-#         return redirect(url_for('home'))
-#     user = User.verify_reset_token(token)
-#     if user is None:
-#         flash('That is an invalid or expired token', 'warning')
-#         return redirect(url_for('reset_request'))
-#     form = ResetPasswordForm()
-#     if form.validate_on_submit():
-#         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-#         user.password = hashed_password
-#         db.session.commit()
-#         flash('Your password has been updated!', 'success')
-#         return redirect(url_for('login'))
-#     return render_template('reset_token.html', title='Reset Password', form=form)
-
-# Password reset token handling
 @app.route("/reset_password/<token>", methods=['GET', 'POST'])
 def reset_token(token):
     if current_user.is_authenticated:
         return redirect(url_for('home'))
-    
-    # Verify the reset token
+
     user = User.verify_reset_token(token)
     if user is None:
-        flash('That is an invalid or expired token', 'warning')
+        flash('⚠️ The token is invalid or has expired.', 'warning')
         return redirect(url_for('reset_request'))
-    
-    form = ResetPasswordForm()
 
+    form = ResetPasswordForm()
     if form.validate_on_submit():
-        # Check if the new password is the same as the current password
-        if bcrypt.check_password_hash(user.password, form.password.data):
-            flash("Your new password cannot be the same as the old password.", "danger")
+        new_password = form.password.data
+
+        # Check against current password
+        if bcrypt.check_password_hash(user.password, new_password):
+            flash("⛔ New password cannot be same as the old one.", "danger")
             return redirect(url_for('reset_token', token=token))
 
-        # Hash the new password and update it
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user.password = hashed_password
+        # Check against last 5 password hashes
+        recent_history = PasswordHistory.query.filter_by(user_id=user.id).order_by(PasswordHistory.timestamp.desc()).limit(5).all()
+        for entry in recent_history:
+            if bcrypt.check_password_hash(entry.password_hash, new_password):
+                flash("🚫 You cannot reuse any of your last 5 passwords.", "danger")
+                return redirect(url_for('reset_token', token=token))
 
-        # Optionally, you could also add to the password history here if needed
-        # db.session.add(PasswordHistory(user_id=user.id, password=hashed_password))
-        
+        # Hash new password and update user
+        hashed_password = bcrypt.generate_password_hash(new_password).decode('utf-8')
+        user.password = hashed_password
+        db.session.add(user)
+
+        # Save new password to history
+        history_entry = PasswordHistory(user_id=user.id, password_hash=hashed_password)
+        db.session.add(history_entry)
+
+        # Optional Cleanup: Keep only latest 5 passwords in DB
+        all_history = PasswordHistory.query.filter_by(user_id=user.id).order_by(PasswordHistory.timestamp.desc()).all()
+        if len(all_history) > 5:
+            for old_entry in all_history[5:]:
+                db.session.delete(old_entry)
+
         db.session.commit()
-        flash('Your password has been updated!', 'success')
+        flash('✅ Your password has been successfully updated.', 'success')
         return redirect(url_for('login'))
 
-    return render_template('reset_token.html', title='Reset Password', form=form)
+    return render_template("reset_token.html", title="Reset Password", form=form)
 
 
 # Error handling for 403 Forbidden error

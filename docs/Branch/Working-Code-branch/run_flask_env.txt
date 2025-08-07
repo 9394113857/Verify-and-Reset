@@ -1,12 +1,9 @@
-# Set the Flask application file
-export FLASK_APP=app.py                # Tells Flask which file to run (must contain your Flask app)
+# --- Development Mode (PowerShell syntax) ---
+$env:FLASK_APP="app.py"                # Set the Flask application file
+$env:FLASK_ENV="development"           # Enable debug mode
+flask run                              # Run the app locally with debug features
 
-# --- Development Mode ---
-export FLASK_ENV=development           # Enables debug mode: auto-reloads on code changes and shows debugger
-flask run                              # Runs the app locally on http://127.0.0.1:5000 with debug features
-
-# ------------------------------------
-
-# --- Production Mode ---
-export FLASK_ENV=production            # Disables debug mode: better performance and hides detailed errors
-flask run                              # Still uses Flask’s built-in server (not recommended for real production)
+# --- Production Mode (PowerShell syntax) ---
+$env:FLASK_APP="app.py"                # Set the Flask application file
+$env:FLASK_ENV="production"            # Disable debug mode for better performance
+flask run                              # Run the app locally (not recommended for real production)

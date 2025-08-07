@@ -1,0 +1,8 @@
+# Clone only the 'working-code' branch from the repository
+git clone --branch working-code --single-branch https://github.com/9394113857/Verify-and-Reset.git
+
+# 1. 'git clone' is the command used to create a local copy of a repository
+# 2. '--branch working-code' specifies that only the 'working-code' branch should be cloned
+# 3. '--single-branch' ensures that only the selected branch is downloaded, not the entire history of other branches
+# 4. 'https://github.com/9394113857/Verify-and-Reset.git' is the URL of the repository to be cloned
+# 5. This command will download the 'working-code' branch from the specified GitHub repository
