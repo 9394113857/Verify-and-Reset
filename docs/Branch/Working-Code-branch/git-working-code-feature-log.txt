@@ -31,3 +31,33 @@ Date: $(Get-Date -Format 'yyyy-MM-dd hh:mm tt')
 
 # 3. Push to remote working-code branch
 git push origin working-code
+
+
+
+======================================
+11-8-2025
+Git Commit Command always structure example:-
+
+git commit -m @"
+Feature: Prevent Reuse of Old Passwords - Next Attempt Implementation
+
+1. Modifications in models.py:
+   - Added PasswordHistory model to track previous passwords.
+   - Implemented add_password_to_history() to store password history.
+   - Created is_password_in_history() to check if a password matches recent ones.
+
+2. Modifications in routes.py:
+   - Added logic to prevent reuse of old passwords during password reset.
+   - Implemented email verification for account activation.
+   - Added JWT token generation and validation for secure login sessions.
+   - Included logout functionality to remove JWT token.
+
+3. Database and Migration:
+   - Updated schema to include PasswordHistory model.
+   - Recommended removing the old database file and generating a new one.
+
+Note: This commit includes the existing code. The final attempt to fully implement will be done in the next update.
+
+Date: $(Get-Date -Format 'yyyy-MM-dd hh:mm tt')
+"@
+

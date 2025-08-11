@@ -1,0 +1,2 @@
+git log -1  # Show details of the most recent (latest) commit
+
