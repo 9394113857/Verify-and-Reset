@@ -6,13 +6,12 @@ from flask import render_template, url_for, flash, redirect, request, abort, jso
 from flaskblog import app, db, bcrypt, mail
 from flaskblog.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
                              PostForm, RequestResetForm, ResetPasswordForm)
-from flaskblog.models import PasswordHistory, User, Post
+from flaskblog.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
 import jwt
 import datetime
 
-# Helper function to generate access token (valid for 30 minutes)
 def generate_access_token(identity):
     payload = {
         'identity': identity,
@@ -20,7 +19,6 @@ def generate_access_token(identity):
     }
     return jwt.encode(payload, app.config['SECRET_KEY'], algorithm='HS256')
 
-# Helper function to generate refresh token (valid for 7 days)
 def generate_refresh_token(identity):
     payload = {
         'identity': identity,
@@ -28,7 +26,6 @@ def generate_refresh_token(identity):
     }
     return jwt.encode(payload, app.config['SECRET_KEY'], algorithm='HS256')
 
-# Decorator to ensure token authentication
 def token_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -44,7 +41,6 @@ def token_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-# Home route
 @app.route("/")
 @app.route("/home")
 def home():
@@ -52,12 +48,10 @@ def home():
     posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
     return render_template('home.html', posts=posts)
 
-# About route
 @app.route("/about")
 def about():
     return render_template('about.html', title='About')
 
-# Function to send verification email after registration
 def send_verification_email(user):
     token = user.get_verification_token()
     msg = Message('Email Verification',
@@ -70,7 +64,6 @@ If you did not create an account, please ignore this email.
 '''
     mail.send(msg)
 
-# Registration route with email verification
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -86,7 +79,6 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
-# Email verification route
 @app.route("/verify_email/<token>", methods=['GET'])
 def verify_email(token):
     user = User.verify_verification_token(token)
@@ -99,7 +91,6 @@ def verify_email(token):
         flash('The verification link is invalid or expired.', 'danger')
         return redirect(url_for('home'))
 
-# Login route with JWT token generation
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -122,7 +113,6 @@ def login():
             flash('Login unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
 
-# Logout route with JWT token removal
 @app.route("/logout")
 def logout():
     logout_user()
@@ -130,7 +120,6 @@ def logout():
     response.delete_cookie('x-access-token')
     return response
 
-# Save profile picture
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
@@ -142,7 +131,6 @@ def save_picture(form_picture):
     i.save(picture_path)
     return picture_fn
 
-# Account route to update user info and profile picture
 @app.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
@@ -163,7 +151,6 @@ def account():
     return render_template('account.html', title='Account',
                            image_file=image_file, form=form)
 
-# Post routes (create, update, delete, view)
 @app.route("/post/new", methods=['GET', 'POST'])
 @login_required
 def new_post():
@@ -174,7 +161,8 @@ def new_post():
         db.session.commit()
         flash('Your post has been created!', 'success')
         return redirect(url_for('home'))
-    return render_template('create_post.html', title='New Post', form=form, legend='New Post')
+    return render_template('create_post.html', title='New Post',
+                           form=form, legend='New Post')
 
 @app.route("/post/<int:post_id>")
 def post(post_id):
@@ -197,7 +185,8 @@ def update_post(post_id):
     elif request.method == 'GET':
         form.title.data = post.title
         form.content.data = post.content
-    return render_template('create_post.html', title='Update Post', form=form, legend='Update Post')
+    return render_template('create_post.html', title='Update Post',
+                           form=form, legend='Update Post')
 
 @app.route("/post/<int:post_id>/delete", methods=['POST'])
 @login_required
@@ -210,7 +199,6 @@ def delete_post(post_id):
     flash('Your post has been deleted!', 'success')
     return redirect(url_for('home'))
 
-# User posts page
 @app.route("/user/<string:username>")
 def user_posts(username):
     page = request.args.get('page', 1, type=int)
@@ -220,63 +208,46 @@ def user_posts(username):
         .paginate(page=page, per_page=5)
     return render_template('user_posts.html', posts=posts, user=user)
 
-# Before updating password
-from werkzeug.security import check_password_hash
+def send_reset_email(user):
+    token = user.get_reset_token()
+    msg = Message('Password Reset Request',
+                  sender='noreply@demo.com',
+                  recipients=[user.email])
+    msg.body = f'''To reset your password, visit the following link:
+{url_for('reset_token', token=token, _external=True)}
 
-def is_reused_password(user, new_password):
-    for entry in user.password_history:
-        if check_password_hash(entry.password_hash, new_password):
-            return True
-    return False
+If you did not make this request then simply ignore this email and no changes will be made.
+'''
+    mail.send(msg)
+    flash('An email has been sent with instructions to reset your password.', 'info')
+    return redirect(url_for('login'))
 
+@app.route("/reset_password", methods=['GET', 'POST'])
+def reset_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    form = RequestResetForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        send_reset_email(user)
+    return render_template('reset_request.html', title='Reset Password', form=form)
 
 @app.route("/reset_password/<token>", methods=['GET', 'POST'])
 def reset_token(token):
     if current_user.is_authenticated:
         return redirect(url_for('home'))
-
     user = User.verify_reset_token(token)
     if user is None:
-        flash('⚠️ The token is invalid or has expired.', 'warning')
+        flash('That is an invalid or expired token', 'warning')
         return redirect(url_for('reset_request'))
-
     form = ResetPasswordForm()
     if form.validate_on_submit():
-        new_password = form.password.data
-
-        # Check against current password
-        if bcrypt.check_password_hash(user.password, new_password):
-            flash("⛔ New password cannot be same as the old one.", "danger")
-            return redirect(url_for('reset_token', token=token))
-
-        # Check against last 5 password hashes
-        recent_history = PasswordHistory.query.filter_by(user_id=user.id).order_by(PasswordHistory.timestamp.desc()).limit(5).all()
-        for entry in recent_history:
-            if bcrypt.check_password_hash(entry.password_hash, new_password):
-                flash("🚫 You cannot reuse any of your last 5 passwords.", "danger")
-                return redirect(url_for('reset_token', token=token))
-
-        # Hash new password and update user
-        hashed_password = bcrypt.generate_password_hash(new_password).decode('utf-8')
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         user.password = hashed_password
-        db.session.add(user)
-
-        # Save new password to history
-        history_entry = PasswordHistory(user_id=user.id, password_hash=hashed_password)
-        db.session.add(history_entry)
-
-        # Optional Cleanup: Keep only latest 5 passwords in DB
-        all_history = PasswordHistory.query.filter_by(user_id=user.id).order_by(PasswordHistory.timestamp.desc()).all()
-        if len(all_history) > 5:
-            for old_entry in all_history[5:]:
-                db.session.delete(old_entry)
-
         db.session.commit()
-        flash('✅ Your password has been successfully updated.', 'success')
+        flash('Your password has been updated! You are now able to log in', 'success')
         return redirect(url_for('login'))
-
-    return render_template("reset_token.html", title="Reset Password", form=form)
-
+    return render_template('reset_token.html', title='Reset Password', form=form)
 
 # Error handling for 403 Forbidden error
 @app.errorhandler(403)

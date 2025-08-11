@@ -1,40 +1,63 @@
-# =============================================
-# Flask-Migrate Commands after Editing models.py
-# =============================================
+=============================================
+Flask-Migrate Commands after Editing models.py
+=============================================
 
-# 1. (Run only once per project, not needed again if migrations/ already exists)
+1. Initialize the migrations directory
+   Run only **once** per project (if migrations/ already exists, skip this step):
+   flask db init
+   → This creates the 'migrations/' directory and sets up the migration environment.
+
+(Optional) View migration scripts for details about schema changes.
+Each file in migrations/versions/ contains the migration code.
+To inspect a migration, open it in a text editor:
+notepad migrations\versions\<migration_filename>.py
+
+Example:
+notepad migrations\versions\23aa4cfc2721_initial_tables.py
+notepad migrations\versions\ad6dd1580b01_add_password_history.py
+→ Shows the full migration script, including upgrade() and downgrade() methods.
+
+2. Generate migration script after changes to models.py
+(Optional) Check existing migrations before proceeding:
+dir migrations\versions
+→ Lists all migration scripts currently present
+
+3. Force Delete All Migrations (If you want to start fresh)
+WARNING: This will delete all migration history!
+First, review the files listed above. Then, to delete:
+Remove-Item -Recurse -Force migrations
+→ This command will recursively remove the entire 'migrations' directory and its contents.
+
+After deletion, re-initialize migrations:
 flask db init
-# → Creates the 'migrations/' directory and sets up migration environment.
+→ This creates a fresh 'migrations/' directory.
 
-# 2. Generate migration script after changes to models.py
+4. Generate migration script after changes to models.py
+To generate the migration script:
 flask db migrate -m "Describe your model changes here"
-# → Detects model changes and creates a new migration script inside migrations/versions/
+→ This will detect model changes and create a new migration script inside migrations/versions/.
 
-# 3. Apply the migration to the database
+5. Apply the migration to the database
+Run this to apply the schema changes to the actual database (e.g., SQLite):
 flask db upgrade
-# → Applies the schema changes to the actual database (e.g., SQLite)
 
-# =============================================
-# ✅ Use this after every models.py update
-# =============================================
-
+=============================================
+✅ Use this after every models.py update
+=============================================
 
 
 =======================
 
 🔧 Database Migration for Enforcing Password History Policy
 
-# 🏗️ Generate a new migration script to reflect changes in SQLAlchemy models
-# This command scans your models.py and creates a new migration file under /migrations/versions
+🏗️ Generate a new migration script to reflect changes in SQLAlchemy models
+This command scans your models.py and creates a new migration file under /migrations/versions:
 flask db migrate -m "Add password history"
 
-# 📦 Apply the generated migration to your actual database
-# This executes the upgrade operations written in the migration file (like creating/modifying tables)
+📦 Apply the generated migration to your actual database
+This executes the upgrade operations written in the migration file (like creating/modifying tables):
 flask db upgrade
 
-# 🚀 Start the Flask development server (run the app locally on http://127.0.0.1:5000)
+🚀 Start the Flask development server (run the app locally on http://127.0.0.1:5000):
 flask run
-
-
-
 
