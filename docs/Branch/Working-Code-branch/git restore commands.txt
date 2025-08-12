@@ -1,0 +1,9 @@
+git restore --staged flaskblog/__pycache__/__init__.cpython-312.pyc    # Unstage compiled __init__.pyc file
+git restore --staged flaskblog/__pycache__/forms.cpython-312.pyc       # Unstage compiled forms.pyc file
+git restore --staged flaskblog/__pycache__/models.cpython-312.pyc      # Unstage compiled models.pyc file
+git restore --staged flaskblog/__pycache__/routes.cpython-312.pyc      # Unstage compiled routes.pyc file
+
+# =====================
+
+# Unstage all currently staged files (clears the entire staging area without modifying files)
+git restore --staged .

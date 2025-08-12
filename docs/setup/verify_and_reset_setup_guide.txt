@@ -1,0 +1,111 @@
+============================================================
+ FLASK PROJECT SETUP & DATABASE MIGRATION GUIDE
+============================================================
+
+This file documents the necessary setup and commands to run
+and maintain the Flask project "Verify-and-Reset".
+
+Always follow these steps when setting up the project locally
+or updating the database schema.
+
+------------------------------------------------------------
+🧰 PROJECT SETUP (First Time)
+------------------------------------------------------------
+
+1. Clone the repository and switch to the correct branch:
+    git clone https://github.com/9394113857/Verify-and-Reset.git
+    git branch -a
+    git checkout working-code
+
+2. Create a virtual environment:
+    py -m venv env
+
+3. Activate the virtual environment:
+    ./env/scripts/activate  (Windows)
+
+4. Install dependencies:
+    pip install -r requirements.txt
+
+5. Upgrade pip (optional but recommended):
+    python.exe -m pip install --upgrade pip
+
+------------------------------------------------------------
+🔧 FLASK DATABASE MIGRATION COMMANDS
+------------------------------------------------------------
+
+These commands use Flask-Migrate (Alembic) to manage schema
+migrations. Run them whenever you change your models.
+
+⚠️ Run these in PowerShell or set the variables in .env
+
+1. Set environment variables:
+    $env:FLASK_APP = "app.py"         # Tells Flask which app to run
+    $env:FLASK_ENV = "development"    # Enables debug mode
+
+2. Initialize the migration repository (ONLY ONCE):
+    flask db init                     # Creates 'migrations/' folder
+
+3. Create migration scripts (when models are changed):
+    flask db migrate -m "Initial migration"  # Replace message as needed
+
+4. Apply the migration to the database:
+    flask db upgrade
+
+5. Run the Flask development server:
+    flask run
+
+------------------------------------------------------------
+🚀 PRODUCTION DEPLOYMENT COMMANDS
+------------------------------------------------------------
+
+Set environment variables for production mode:
+    $env:FLASK_ENV = "production"
+
+Install production WSGI server (only once):
+    pip install waitress
+
+Run app using Waitress on Windows:
+    waitress-serve --port=8000 flaskblog:app
+
+📝 Note: "flaskblog" should be the package/module name 
+that contains your Flask `app` object. Adjust as needed.
+
+Alternative for Linux (Gunicorn):
+    gunicorn -w 4 -b 0.0.0.0:8000 flaskblog:app
+
+------------------------------------------------------------
+📋 OPTIONAL UTILITIES
+------------------------------------------------------------
+
+Show current migration version:
+    flask db current
+
+View all migration history:
+    flask db history
+
+Rollback to previous migration (use with caution):
+    flask db downgrade
+
+Show Alembic heads:
+    flask db heads
+
+View specific migration details:
+    flask db show <revision_id>
+
+Sync database with latest migration (in case of mismatch):
+    flask db stamp head
+
+------------------------------------------------------------
+📝 IMPORTANT NOTES
+------------------------------------------------------------
+
+- Run `flask db migrate` after changing/adding model classes.
+- Follow it with `flask db upgrade` to apply changes.
+- Avoid editing migration scripts manually.
+- Never delete migration folders unless using Git for versioning.
+- Do not use `flask run` in production — use a WSGI server.
+- Document any setup changes in this file for your team.
+
+============================================================
+ END OF FILE
+============================================================

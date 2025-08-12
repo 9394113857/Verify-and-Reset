@@ -1,0 +1,37 @@
+# Step 1: Add all changes (new, modified, deleted) to staging
+git add .
+
+# Step 2: Prepare detailed commit message with dynamic date/time and machine info
+$commitMessage = @"
+# 🚀 Setup Confirmation Commit - Working-Code Branch
+--------------------------------------------
+
+✅ Machine: Personal Laptop of Raghu  
+📅 Date: $(Get-Date -Format 'yyyy-MM-dd hh:mm tt')
+
+## 🔁 Git Operations
+- Cloned repository successfully  
+- Checked out 'working-code' branch  
+
+## ⚙️ Environment Setup
+- Created and activated virtual environment  
+- Installed dependencies from requirements.txt  
+- Applied database migrations  
+
+## 🧪 Functionality Verified
+- Login and Signup pages are working in browser  
+- Basic routing and page load confirmed  
+
+## ⚠️ Pending
+- Full end-to-end flow not fully tested  
+- Code appears stable (99% confidence)
+
+--------------------------------------------
+# ✅ Commit from new setup machine
+"@
+
+# Step 3: Commit staged changes with the prepared message
+git commit -m $commitMessage
+
+# Step 4: Push committed changes to remote 'working-code' branch
+git push origin working-code
