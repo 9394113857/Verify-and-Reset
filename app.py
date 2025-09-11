@@ -14,7 +14,7 @@
 # --------------------------------------------
 
 from flaskblog import app, db                   # Import the Flask app and database instance
-
+ 
 if __name__ == '__main__':
     with app.app_context():                    # Create an application context for database operations
         db.create_all()                        # Create all tables based on the models if they don’t exist
