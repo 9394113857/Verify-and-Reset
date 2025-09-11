@@ -68,16 +68,33 @@ If you did not create an account, please ignore this email.
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
+
     form = RegistrationForm()
     if form.validate_on_submit():
+        # ✅ Hash the password
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        
+        # ✅ Create user
+        user = User(
+            username=form.username.data,
+            email=form.email.data,
+            password=hashed_password
+        )
         db.session.add(user)
         db.session.commit()
-        send_verification_email(user)  # Send verification email
-        flash('An email has been sent with instructions to verify your email.', 'info')
+
+        # ✅ Store password in history immediately
+        user.add_password_to_history(hashed_password)
+
+        # ✅ Send verification email
+        send_verification_email(user)
+
+        flash('📧 An email has been sent with instructions to verify your account.', 'info')
         return redirect(url_for('login'))
+
     return render_template('register.html', title='Register', form=form)
+
+
 
 @app.route("/verify_email/<token>", methods=['GET'])
 def verify_email(token):
@@ -226,28 +243,49 @@ If you did not make this request then simply ignore this email and no changes wi
 def reset_request():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
+
     form = RequestResetForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        send_reset_email(user)
+        if user:
+            send_reset_email(user)
+            flash('📧 An email has been sent with instructions to reset your password.', 'info')
+        else:
+            flash('⚠️ No account found with that email.', 'warning')
     return render_template('reset_request.html', title='Reset Password', form=form)
+
 
 @app.route("/reset_password/<token>", methods=['GET', 'POST'])
 def reset_token(token):
     if current_user.is_authenticated:
         return redirect(url_for('home'))
+
     user = User.verify_reset_token(token)
     if user is None:
-        flash('That is an invalid or expired token', 'warning')
+        flash('❌ That is an invalid or expired token', 'warning')
         return redirect(url_for('reset_request'))
+
     form = ResetPasswordForm()
     if form.validate_on_submit():
+        # ✅ Check password history (last 5 passwords)
+        if user.is_password_in_history(form.password.data):
+            flash('⚠️ You cannot reuse one of your last 5 passwords. Please choose a new one.', 'danger')
+            return redirect(url_for('reset_token', token=token))
+
+        # ✅ Hash and update password
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         user.password = hashed_password
         db.session.commit()
-        flash('Your password has been updated! You are now able to log in', 'success')
+
+        # ✅ Store new password in history
+        user.add_password_to_history(hashed_password)
+
+        flash('✅ Your password has been updated! You can now log in.', 'success')
         return redirect(url_for('login'))
+
     return render_template('reset_token.html', title='Reset Password', form=form)
+
+
 
 # Error handling for 403 Forbidden error
 @app.errorhandler(403)

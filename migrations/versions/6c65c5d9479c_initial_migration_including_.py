@@ -1,8 +1,8 @@
-"""Describe your model changes here
+"""Initial migration including PasswordHistory
 
-Revision ID: b418b9b2fad2
+Revision ID: 6c65c5d9479c
 Revises: 
-Create Date: 2025-08-12 08:31:31.490163
+Create Date: 2025-09-10 17:49:09.240925
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'b418b9b2fad2'
+revision = '6c65c5d9479c'
 down_revision = None
 branch_labels = None
 depends_on = None

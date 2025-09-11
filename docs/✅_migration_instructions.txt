@@ -1,0 +1,28 @@
+# ✅ Before running migrations, set the FLASK_APP environment variable:
+# ✅ For PowerShell you might need:
+$env:FLASK_APP="app.py"
+
+# ✅ To check existing migrations (if any):
+# ✅ List migration scripts in the migrations/versions folder:
+Get-ChildItem .\migrations\versions
+
+# ✅ Delete the migrations folder completely
+rm -r migrations
+
+✅ Delete old migrations folder
+Remove-Item -Recurse -Force .\migrations
+# This deletes all previous migration files.
+
+# ✅ Delete the existing database
+Remove-Item -Force .\site.db
+
+# Re-initialize migrations:
+# ✅ Then run:
+flask db init        # ✅ only once, if migrations/ folder doesn’t exist
+flask db migrate -m "Add PasswordHistory model"  # ✅ creates migration script # This will detect all tables: User, Post, PasswordHistory, etc.
+flask db upgrade     # ✅ applies migrations to the database # Your SQLite database (site.db) will now have all the tables.
+
+
+# ✅ To see what migrations have been applied:
+flask db history     # ✅ shows migration history
+flask db current     # ✅ shows current migration
