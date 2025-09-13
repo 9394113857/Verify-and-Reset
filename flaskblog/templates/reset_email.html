@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Password Reset Request</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body style="background:#fafafa; font-family: Arial, sans-serif; color:#333; padding:20px;">
+    <div class="content-section" style="max-width:600px; margin:auto; border-radius:5px;">
+        <h2 class="article-title">Password Reset Request</h2>
+        <p>Hello {{ user.username }},</p>
+        <p>We received a request to reset your password. Please click the button below to reset it:</p>
+        <p style="text-align:center; margin:20px 0;">
+            <a href="{{ url_for('reset_token', token=token, _external=True) }}"
+               style="background-color:#5f788a; color:white; padding:10px 20px; text-decoration:none; border-radius:3px;">
+               Reset Password
+            </a>
+        </p>
+        <p>If you did not make this request, simply ignore this email and no changes will be made.</p>
+        <hr>
+        <small class="article-metadata">This is an automated message. Please do not reply.</small>
+    </div>
+</body>
+</html>

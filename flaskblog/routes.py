@@ -98,17 +98,31 @@ def about():
 
 # ----------------- Registration -----------------
 def send_verification_email(user):
-    token = user.get_verification_token()  # Generate verification token
-    msg = Message('Email Verification',
-                  sender='noreply@demo.com',
-                  recipients=[user.email])  # Create email message
-    msg.body = f'''To verify your email, visit the following link:
-{url_for('verify_email', token=token, _external=True)}
+    """Send email verification link with HTML template and logging."""
+    token = user.get_verification_token()
+    msg = Message(
+        subject='Email Verification',
+        sender='noreply@demo.com',
+        recipients=[user.email]
+    )
+    
+    # Optional: Plain text fallback for better compatibility
+    verification_link = url_for('verify_email', token=token, _external=True)
+    msg.body = f'''To verify your email, click the link below:
+{verification_link}
 
 If you did not create an account, please ignore this email.
 '''
-    mail.send(msg)  # Send email
-    logger.info(f"Verification email sent to: {user.email}")  # Logging email alert event
+
+    # HTML email using template
+    msg.html = render_template('verify_email.html', user=user, token=token)
+
+    try:
+        mail.send(msg)
+        logger.info(f"Verification email sent to: {user.email}")
+    except Exception as e:
+        logger.error(f"Failed to send verification email to {user.email}: {e}")
+
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -302,16 +316,32 @@ def user_posts(username):
 
 # ----------------- Password Reset -----------------
 def send_reset_email(user):
-    token = user.get_reset_token()  # Generate reset token
-    msg = Message('Password Reset Request', sender='noreply@demo.com', recipients=[user.email])  # Create email message
-    msg.body = f'''To reset your password, visit the following link:
-{url_for('reset_token', token=token, _external=True)}
+    """Send password reset email with HTML template and logging."""
+    token = user.get_reset_token()
 
-If you did not make this request then simply ignore this email.
+    msg = Message(
+        subject='Password Reset Request',
+        sender='noreply@demo.com',
+        recipients=[user.email]
+    )
+
+    # Plain text fallback (recommended for compatibility)
+    reset_link = url_for('reset_token', token=token, _external=True)
+    msg.body = f'''To reset your password, click the link below:
+{reset_link}
+
+If you did not request a password reset, please ignore this email.
 '''
-    mail.send(msg)  # Send email
-    logger.info(f"Password reset email sent to: {user.email}")  # Logging
-    flash('An email has been sent with instructions to reset your password.', 'info')  # Flash message
+
+    # HTML version using a Jinja2 template
+    msg.html = render_template('reset_email.html', user=user, token=token)
+
+    try:
+        mail.send(msg)
+        logger.info(f"Password reset email sent to: {user.email}")
+    except Exception as e:
+        logger.error(f"Failed to send password reset email to {user.email}: {e}")
+
 
 @app.route("/reset_password", methods=['GET', 'POST'])
 def reset_request():
