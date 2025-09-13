@@ -1,0 +1,79 @@
+# --- 🚀 Feature Branch Workflow for Logging & Alerts ---
+
+
+# 1. 🏗️ Create and switch to your feature branch
+git checkout -b feature/logging-alerts
+
+# 2. 🛠️ Make your code changes (e.g., add logging + email alerts)
+#    📦 Stage all changes
+git add .
+
+#    📝 Commit your changes with a descriptive message
+git commit -m "Implement logging and email alerts for user actions"
+
+# 3. ⬆️ Push the feature branch to the remote repository
+git push origin feature/logging-alerts
+
+
+
+# --- ✏️ If you need to update a specific file in your commit ---
+
+
+# 4. 🔄 Unstage the file if needed
+#    (example: unstage docs/logging-alerts-guide.txt only)
+git reset HEAD docs/logging-alerts-guide.txt
+
+# Or unstage ALL changes:
+git reset
+
+# 5. 📋 Check the status of your working directory
+git status
+
+# 6. 📂 Stage the file again after making changes
+git add docs/logging-alerts-guide.txt
+
+# 7. 📝 Commit the updated file with a clear message
+git commit -m "Update git workflow guide for logging & alerts feature"
+
+# 8. ⬆️ Push the feature branch again if needed
+git push origin feature/logging-alerts
+
+
+
+# --- 🔀 Merge Feature Branch into Working Branch ---
+
+
+# 9. ↩️ Switch back to your working branch (e.g., working-code)
+git checkout working-code
+
+# 10. 🔗 Merge the feature branch into your working branch with a clear message
+git merge feature/logging-alerts -m "Merge feature/logging-alerts into working-code: implement logging + alerts"
+
+# 11. ⬆️ Push the updated working branch to the remote repository
+git push origin working-code
+
+
+
+# --- 🧹 Cleanup (optional, after successful merge) ---
+
+
+# Delete the local feature branch 🗑️
+git branch -d feature/logging-alerts
+
+# Delete the remote feature branch 🚮
+git push origin --delete feature/logging-alerts
+
+
+
+# --- ⚠️ Rollback / Undo if something goes wrong ---
+
+
+# 1. If merge is NOT pushed yet, reset working-code to previous commit ⏪
+git reset --hard HEAD~1
+
+# 2. If merge is already pushed to GitHub, revert the merge commit ⏪
+#    (replace <merge_commit_sha> with the actual SHA from git log) 🔍
+git revert -m 1 <merge_commit_sha>
+
+# Push rollback changes to remote 🔁
+git push origin working-code

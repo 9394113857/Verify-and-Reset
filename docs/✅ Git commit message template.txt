@@ -1,0 +1,34 @@
+# 1. Check the current status of your working directory
+git status
+
+# 2. Stage all changes
+git add .
+
+# 3. Commit using a reusable template file (manually edited with date inserted)
+#    Replace [YOUR-BRANCH-NAME] below when you push
+
+git commit -m "Feature: Logging and Email Alerts - Daily Log Generation and User Notification
+
+1. **Modifications in models.py**:
+   - Added LogEntry model to track user actions and system events (if DB-based logging is used).
+   - Updated User model to store email preferences for alerts.
+
+2. **Modifications in routes.py / logging setup**:
+   - Implemented daily log file generation (`YYYY-MM-DD.log` format).
+   - Integrated Python logging module with rotating file handler per day.
+   - Configured email alert system to send daily log summaries to each user.
+
+3. **Email & Notifications**:
+   - Added logic to send email alerts with daily logs to the respective users.
+   - Ensured asynchronous mail sending using background tasks or Celery (if applicable).
+
+4. **Environment & Config**:
+   - Added `LOG_DIR`, `EMAIL_HOST`, and related settings to `.env` and config files.
+   - Ensured log directory is auto-created if missing.
+
+Note: Initial implementation of logging and alerting. Further refinements (e.g., log levels, user opt-outs) will be added in future updates.
+
+Date: $(Get-Date -Format 'yyyy-MM-dd hh:mm tt')"
+
+# 4. Push changes to your current working branch (e.g., dev, feature/login, etc.)
+git push origin <your-branch-name>
