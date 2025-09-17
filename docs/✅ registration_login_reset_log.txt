@@ -1,0 +1,43 @@
+| S.No | Timestamp            | Method | URL                               | Status Code | Notes       |
+| ---- | -------------------- | ------ | --------------------------------- | ----------- | ----------- |
+| 1    | 18/Sep/2025 01:41:50 | GET    | /                                 | 200         | ✅ OK        |
+| 2    | 18/Sep/2025 01:41:50 | GET    | /static/main.css                  | 200         | ✅ OK        |
+| 3    | 18/Sep/2025 01:41:51 | GET    | /favicon.ico                      | 404         | ❌ Not Found |
+| 4    | 18/Sep/2025 01:41:53 | GET    | /register                         | 200         | ✅ OK        |
+| 5    | 18/Sep/2025 01:41:53 | GET    | /static/main.css                  | 304         | ✅ OK        |
+| 6    | 18/Sep/2025 01:42:44 | POST   | /register                         | 302         | ✅ Redirect  |
+| 7    | 18/Sep/2025 01:42:44 | GET    | /login                            | 200         | ✅ OK        |
+| 8    | 18/Sep/2025 01:42:44 | GET    | /static/main.css                  | 304         | ✅ OK        |
+| 9    | 18/Sep/2025 01:43:32 | GET    | /verify\_email/<token>            | 302         | ✅ Redirect  |
+| 10   | 18/Sep/2025 01:43:32 | GET    | /login                            | 200         | ✅ OK        |
+| 11   | 18/Sep/2025 01:43:41 | POST   | /login                            | 200         | ✅ OK        |
+| 12   | 18/Sep/2025 01:44:11 | POST   | /login                            | 302         | ✅ Redirect  |
+| 13   | 18/Sep/2025 01:44:11 | GET    | /home                             | 200         | ✅ OK        |
+| 14   | 18/Sep/2025 01:44:25 | GET    | /post/new                         | 200         | ✅ OK        |
+| 15   | 18/Sep/2025 01:44:26 | GET    | /account                          | 200         | ✅ OK        |
+| 16   | 18/Sep/2025 01:44:26 | GET    | /static/profile\_pics/default.jpg | 404         | ❌ Not Found |
+| 17   | 18/Sep/2025 01:44:31 | GET    | /logout                           | 302         | ✅ Redirect  |
+| 18   | 18/Sep/2025 01:44:31 | GET    | /home                             | 200         | ✅ OK        |
+| 19   | 18/Sep/2025 01:44:38 | GET    | /login                            | 200         | ✅ OK        |
+| 20   | 18/Sep/2025 01:44:41 | GET    | /reset\_password                  | 200         | ✅ OK        |
+| 21   | 18/Sep/2025 01:44:47 | POST   | /reset\_password                  | 200         | ✅ OK        |
+| 22   | 18/Sep/2025 01:44:47 | POST   | /account                          | 302         | ✅ Redirect  |
+| 23   | 18/Sep/2025 01:45:17 | POST   | /reset\_password                  | 200         | ✅ OK        |
+| 24   | 18/Sep/2025 01:45:49 | POST   | /reset\_password                  | 200         | ✅ OK        |
+| 25   | 18/Sep/2025 01:45:53 | GET    | /reset\_password/<token>          | 200         | ✅ OK        |
+| 26   | 18/Sep/2025 01:46:03 | POST   | /reset\_password/<token>          | 302         | ✅ Redirect  |
+| 27   | 18/Sep/2025 01:46:30 | POST   | /reset\_password/<token>          | 302         | ✅ Redirect  |
+| 28   | 18/Sep/2025 01:46:42 | POST   | /login                            | 200         | ✅ OK        |
+| 29   | 18/Sep/2025 01:46:53 | POST   | /login                            | 200         | ✅ OK        |
+| 30   | 18/Sep/2025 01:47:08 | POST   | /login                            | 302         | ✅ Redirect  |
+| 31   | 18/Sep/2025 01:47:08 | GET    | /home                             | 200         | ✅ OK        |
+| 32   | 18/Sep/2025 01:47:14 | GET    | /account                          | 200         | ✅ OK        |
+| 33   | 18/Sep/2025 01:47:14 | GET    | /static/profile\_pics/default.jpg | 404         | ❌ Not Found |
+| 34   | 18/Sep/2025 01:47:21 | POST   | /account                          | 302         | ✅ Redirect  |
+| 35   | 18/Sep/2025 01:47:21 | GET    | /account                          | 200         | ✅ OK        |
+| 36   | 18/Sep/2025 01:47:23 | GET    | /account                          | 200         | ✅ OK        |
+| 37   | 18/Sep/2025 01:47:24 | GET    | /logout                           | 302         | ✅ Redirect  |
+| 38   | 18/Sep/2025 01:47:24 | GET    | /home                             | 200         | ✅ OK        |
+| 39   | 18/Sep/2025 01:47:33 | GET    | /login                            | 200         | ✅ OK        |
+| 40   | 18/Sep/2025 01:47:34 | GET    | /register                         | 200         | ✅ OK        |
+| 41   | 18/Sep/2025 01:47:41 | GET    | /login                            | 200         | ✅ OK        |

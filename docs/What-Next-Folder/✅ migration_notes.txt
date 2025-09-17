@@ -1,0 +1,44 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# ✅ FLASK-MIGRATE: DATABASE MIGRATION STEPS (using Alembic)
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ✅ Step 1: Initialize migration setup (only once)
+flask db init                         # ✅ Creates migrations/ folder and setup files (only needed once)
+
+# ✅ Step 2: Create migration script
+flask db migrate -m "Add PasswordHistory model"  # ✅ Detects model changes and creates a migration script
+                                                 #    Detected tables: User, Post, PasswordHistory
+
+# ✅ Step 3: Apply the migration to the database
+flask db upgrade                      # ✅ Applies migration to the database (e.g., site.db)
+                                      #    All new tables are now created in the DB
+
+# ✅ Optional: View the generated migration scripts
+Get-ChildItem .\migrations\versions   # ✅ Lists the migration files/scripts with hash + message
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 📜 VIEWING MIGRATION STATUS
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ✅ Show migration history (applied and unapplied)
+flask db history                      # ✅ Lists all migrations in order
+
+# ✅ Show the current applied migration
+flask db current                      # ✅ Shows the latest applied migration revision
+
+# ✅ Roll back the most recent migration (if needed)
+flask db downgrade                    # ⚠️ Reverts the last applied migration (use with caution)
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 📌 NOTES / FUTURE TASKS
+# ─────────────────────────────────────────────────────────────────────────────
+
+# - Add relationships between User and PasswordHistory models.
+# - Add fields to Post model (e.g., category, tags).
+# - Consider adding initial seed data via a custom script.
+# - Keep tracking migrations in this file for future reference.
+
+# ✅ All commands above are to be run from the root of your Flask project.
+# ✅ Make sure your virtual environment is activated (e.g., (env) ...)
+
+# End of migration notes ✅
