@@ -1,0 +1,28 @@
+# =============================
+# ✅ Git Commit & Push Template with Numbered Steps
+# =============================
+
+# 1️⃣ Stage the file(s) you want to commit
+# Replace <file_path> with the file(s) you want to add, e.g., .flaskenv
+git add <file_path>
+# ✅ Example: git add .flaskenv
+# ✅ Or stage all changes: git add .
+
+# 2️⃣ Commit your changes with a clear, single-line message
+# Replace <commit_message> with a short description of your changes
+# The dynamic date/time will be added automatically
+git commit -m "<commit_message> - $(Get-Date -Format 'yyyy-MM-dd hh:mm tt')"
+# ✅ Example for reference:
+# git commit -m "Add .flaskenv for Flask config - $(Get-Date -Format 'yyyy-MM-dd hh:mm tt')"
+# Explanation: 
+# - "Add .flaskenv for Flask config" describes what the commit does
+# - The date/time dynamically shows when the commit was made
+
+# 3️⃣ Push your changes to the remote branch
+# Replace <branch_name> with the branch you want to push to, e.g., working-code
+git push origin <branch_name>
+# ✅ Example: git push origin working-code
+
+# 4️⃣ Check status after push (optional but recommended)
+git status
+# ✅ Shows if your local branch is in sync with remote
