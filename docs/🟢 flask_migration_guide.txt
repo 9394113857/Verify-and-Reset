@@ -1,0 +1,70 @@
+# =============================
+# ✅ Git & Remote Repository Workflow
+# =============================
+
+# Fetch latest changes from remote repository and check status
+git fetch && git status
+
+# Pull changes from the 'working-code' branch on the remote named 'origin'
+git pull origin working-code
+
+# (Optional) Check for changes in models or migrations
+git status
+# OR
+git diff HEAD~1 HEAD -- path/to/models.py path/to/migrations/
+
+# Stage new or modified files
+git add <file>   # example: git add docs/flask_migration_guide.txt
+# OR stage all changes
+git add .
+
+# Commit your changes with a descriptive message
+git commit -m "Describe your changes here"
+
+# Push committed changes to GitHub
+git push origin working-code
+
+# After push, check status
+git status
+
+# =============================
+# ✅ Flask Environment Setup
+# =============================
+
+# For PowerShell (Windows):
+$env:FLASK_APP="app.py"
+
+# For CMD (Windows):
+set FLASK_APP=app.py
+
+# For macOS/Linux (bash/zsh):
+export FLASK_APP=app.py
+
+# =============================
+# ✅ Flask Database Migrations
+# =============================
+
+# Initialize migrations (only once, if migrations/ folder doesn’t exist)
+flask db init
+
+# Create new migration script (detects model changes: User, Post, PasswordHistory, etc.)
+flask db migrate -m "Add PasswordHistory model"
+
+# Apply migrations to the database (updates site.db with all tables)
+flask db upgrade
+
+# =============================
+# ✅ Check Migration Status
+# =============================
+
+# Show migration history
+flask db history
+
+# Show current applied migration
+flask db current
+
+# =============================
+# ✅ Run Flask Development Server
+# =============================
+
+flask run
