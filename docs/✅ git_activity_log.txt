@@ -1,0 +1,3 @@
+# This command commits all changes and adds a message warning users at login if their password is near expiry, displaying the expiry date.
+git commit -am "Warn user at login if password is near expiry and display expiry date. {dynamic_date_time}"
+
