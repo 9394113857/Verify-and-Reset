@@ -1,0 +1,50 @@
+# Step 1: Fetch updates from the remote repository (working-code)
+git fetch origin working-code
+
+# Explanation:
+# 1. `git fetch` downloads all changes from the remote repository (origin) but doesn't apply them to your local branch.
+# 2. This command only updates a hidden copy of the remote branch on your local machine (origin/working-code).
+# 3. It gives you an overview of the updates available without making any changes to your local branch. ✅
+
+# Step 2: Check the status of your local branch compared to the remote branch
+git status
+
+# Explanation:
+# 1. `git status` shows the current state of your local working directory and branch in comparison to the remote branch.
+# 2. It will tell you if your local branch is behind the remote branch and by how many commits. 
+# 3. If your branch is "up to date", it means no new changes are available. 🌿
+# 4. If it's "behind", it suggests that there are updates that you need to pull. 🚨
+
+# Example of what you'll see:
+# If there are new updates:
+# On branch working-code
+# Your branch is behind 'origin/working-code' by X commits, and can be fast-forwarded.
+# (use "git pull" to update your local branch)
+#
+# If there are no new updates:
+# On branch working-code
+# Your branch is up to date with 'origin/working-code'. 👍
+
+# Step 3: Pull the changes from the remote branch and merge them into your local branch
+git pull origin working-code
+
+# Explanation:
+# 1. `git pull` is a combination of two actions: `git fetch` (to download the changes) and `git merge` (to merge those changes into your local branch).
+# 2. If your local branch is behind (as shown by `git status`), this command downloads and applies the new commits to your local branch.
+# 3. This ensures that you are working with the latest version of the project and helps you stay in sync with the remote repository. 🔄
+# 4. Make sure to resolve any merge conflicts if they arise during this step. ⚔️
+
+# Example Output After Pulling:
+# From https://github.com/9394113857/Verify-and-Reset
+#  * branch            working-code -> FETCH_HEAD
+# Updating 727617f..389f190
+# Fast-forward
+# docs/.flaskenv                                     |  10 +  
+# docs/What-Next-Folder/What-Next.txt                | 470 +--------------------
+# "docs/\342\234\205 git_activity_log.txt"           |   3 +  
+# "docs/\342\234\205 git_commit_push_guide.txt"      |  28 ++
+# ...
+
+# Filename for Storing the Commands: "git-daily-commands.txt" 📄
+
+# You can save these commands with explanations in a file to easily refer to them and streamline your daily Git workflow. 🚀

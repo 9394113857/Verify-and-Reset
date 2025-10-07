@@ -1,0 +1,8 @@
+# Step 1: Fetch updates from the remote repository (working-code)
+git fetch origin working-code
+
+# Step 2: Check the status of your local branch compared to the remote branch
+git status
+
+# Step 3: If your branch is behind, pull the changes from the remote branch and merge them into your local branch
+git pull origin working-code
