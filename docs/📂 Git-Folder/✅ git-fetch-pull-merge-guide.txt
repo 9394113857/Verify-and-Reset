@@ -1,0 +1,64 @@
+# 🧠 Git Workflow: Fetch vs Pull vs Merge (Branch: working-code)
+
+# ✅ Step 1: Check your current branch and working directory status
+git status
+# 📍 You should see:
+#   On branch working-code
+#   nothing to commit, working tree clean
+# 🟢 This means you are on the right branch and there are no uncommitted changes.
+
+# 🔽 Step 2: Fetch the latest changes from the remote (GitHub)
+git fetch origin working-code
+# 📥 Downloads new commits from 'origin/working-code' into your local repo.
+# 🚫 Does NOT update your local working-code branch yet.
+# ✅ Safe to use. Just "downloads" — nothing changes in your files yet.
+
+# 🔍 Step 3: Preview what changed (optional but helpful)
+
+# See new commits added in the remote branch but not in your local branch
+git log HEAD..origin/working-code --oneline
+# 📋 This shows the list of commits you're behind.
+
+# See the actual code/file differences between local and remote branches
+git diff working-code origin/working-code
+# 🧾 Shows line-by-line changes between local and remote versions.
+
+# 🔄 Step 4: Merge the fetched changes into your local branch
+git merge origin/working-code
+# 📌 Merges the commits from origin/working-code into your working-code branch.
+# ✅ Use this only if you've already fetched and reviewed the changes.
+
+# 🚀 Shortcut: Do both fetch + merge in one step
+git pull origin working-code
+# ⚡ This command does:
+#    → git fetch origin working-code
+#    → git merge origin/working-code
+# 🎯 Ideal when you trust the remote changes and want quick updates.
+
+# 🔚 Summary of Commands and What They Do
+
+# 📦 Fetch remote changes without applying them
+git fetch origin working-code
+
+# 🔎 View missing commits
+git log HEAD..origin/working-code --oneline
+
+# 🧾 View file/code differences
+git diff working-code origin/working-code
+
+# 🔁 Apply fetched changes manually
+git merge origin/working-code
+
+# 🚀 Fetch and merge in one go
+git pull origin working-code
+
+# 📌 Final Flow Recommendations:
+
+# ✅ If you want full control and want to preview first:
+git fetch origin working-code
+git log HEAD..origin/working-code
+git diff working-code origin/working-code
+git merge origin/working-code
+
+# ⚡ If you're okay to auto-update without previewing:
+git pull origin working-code
