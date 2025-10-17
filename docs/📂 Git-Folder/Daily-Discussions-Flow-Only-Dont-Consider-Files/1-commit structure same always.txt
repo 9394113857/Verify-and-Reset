@@ -1,0 +1,22 @@
+git commit -m "Feature: [System Feature Name] - [Main Feature Description]
+
+1. **Modifications in [file1.extension]**:
+    - Added [Model/Component1] to handle [functionality1]
+    - Updated [Model/Component2] for [functionality2]
+
+2. **Modifications in [file2.extension] / [component setup]**:
+    - Implemented [implementation1] ([format/structure details])
+    - Integrated [tool/module1] with [component1]
+    - Configured [system1] to handle [functionality3]
+
+3. **[Component Name]**:
+    - Added logic for [functionality4]
+    - Implemented [functionality5] using [tool/method]
+
+4. **[Setup Category]**:
+    - Added [config1], [config2], and related settings
+    - Ensured [requirement1] is handled
+
+Note: [Brief description of implementation status]. [Future plans/improvements]
+
+Date: $(Get-Date -Format 'yyyy-MM-dd hh:mm tt')"

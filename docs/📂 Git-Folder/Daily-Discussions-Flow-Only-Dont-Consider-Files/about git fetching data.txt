@@ -1,0 +1,38 @@
+branch=$(git rev-parse --abbrev-ref HEAD)
+git log -n 30 --pretty=format:"%h|%an|%ar|%ad|%s" --date=short | nl -w2 -s'. ' | awk -v branch="$branch" -F'|' '
+function wrap(text, width, prefix,    result, line) {
+  while (length(text) > width) {
+    for (i = width; i > 0; i--) {
+      if (substr(text, i, 1) == " ") {
+        line = substr(text, 1, i);
+        text = substr(text, i + 1);
+        break;
+      }
+    }
+    if (i == 0) {
+      line = substr(text, 1, width);
+      text = substr(text, width + 1);
+    }
+    result = result prefix line "\n";
+  }
+  return result prefix text;
+}
+
+BEGIN {
+  line = "+------+------------+----------------------+-------------------+------------+--------------------------------------------------------------+";
+  printf "\n📦 Commits on Branch: %s\n", branch;
+  print line;
+  printf "| %-4s | %-10s | %-20s | %-17s | %-10s | %-60s |\n", "No", "Hash", "Author", "Ago", "Date", "Message";
+  print line;
+}
+{
+  msg = wrap($6, 60, "");
+  n = split(msg, lines, "\n");
+  printf "| %-4s | %-10s | %-20s | %-17s | %-10s | %-60s |\n", $1, $2, $3, $4, $5, lines[1];
+  for (i = 2; i <= n; i++) {
+    printf "| %-4s | %-10s | %-20s | %-17s | %-10s | %-60s |\n", "", "", "", "", "", lines[i];
+  }
+}
+END {
+  print line;
+}'
