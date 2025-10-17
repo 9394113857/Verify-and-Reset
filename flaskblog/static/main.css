@@ -1,13 +1,15 @@
+/* Body and Typography */
 body {
   background: #fafafa;
   color: #333333;
-  margin-top: 5rem;
+  margin-top: 6.5rem; /* For announcement bar + navbar */
 }
 
 h1, h2, h3, h4, h5, h6 {
   color: #444444;
 }
 
+/* Navbar */
 .bg-steel {
   background-color: #5f788a;
 }
@@ -24,6 +26,45 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 500;
 }
 
+/* Announcement Bar with Scroll */
+.announcement-bar {
+  background-color: #ffeb3b;
+  color: #000;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  padding: 8px 0;
+  font-size: 16px;
+  position: fixed;
+  top: 0;
+  z-index: 1040;
+}
+
+/* Scrolling text */
+.update-text {
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
+  font-weight: 500;
+  white-space: nowrap;
+  animation: scroll-left 15s linear infinite;
+  padding-left: 100%;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0 !important;
+}
+
+/* Content Sections */
 .content-section {
   background: #ffffff;
   padding: 10px 20px;
@@ -32,6 +73,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 20px;
 }
 
+/* Article Styles */
 .article-title {
   color: #444444;
 }
@@ -54,7 +96,7 @@ a.article-title:hover {
 .article-metadata {
   padding-bottom: 1px;
   margin-bottom: 4px;
-  border-bottom: 1px solid #e3e3e3
+  border-bottom: 1px solid #e3e3e3;
 }
 
 .article-metadata a:hover {
@@ -68,6 +110,7 @@ a.article-title:hover {
   vertical-align: middle;
 }
 
+/* Account Page Styles */
 .account-img {
   height: 125px;
   width: 125px;

@@ -1,0 +1,14 @@
+git commit -m "Feature: UI Update - Scrollable Announcement Bar and Navbar Styling
+
+1. **Modifications in main.css**:
+   - Added styles for a fixed, scrollable announcement bar with smooth horizontal scrolling.
+   - Styled navbar with custom colors and hover effects.
+
+2. **Modifications in layout.html**:
+   - Added a fixed announcement bar with scrolling text at the top of the page.
+   - Integrated the announcement bar into the page layout without affecting navbar functionality.
+   - Updated navbar links with authentication-aware logic.
+
+Note: Added UI enhancement to display important announcements in a visually appealing, non-intrusive way.
+
+Date: $(Get-Date -Format 'yyyy-MM-dd hh:mm tt')"
