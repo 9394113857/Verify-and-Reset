@@ -13,4 +13,4 @@ git commit -m "Feature: Project Structure - Base Directories and Python Modules
 
 Note: This setup provides a clean and scalable foundation for organizing Python codebases across different domains.
 
-Date: $(Get-Date -Format 'yyyy-MM-dd hh:mm tt')"
+Date: $(Get-Date -Format 'yyyy-MM-dd hh:mm tt')" 
