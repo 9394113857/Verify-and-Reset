@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+# & .\env\Scripts\python.exe (Get-ChildItem -Path 'E:\Cloned\Verify-and-Reset' -Filter 'clear_recent_items.py' -Recurse -File | Select-Object -First 1).FullName
+
+
 import os
 import shutil
 
